@@ -1,0 +1,25 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ---- Virtual environments ----
+venv/
+.venv/
+env/
+ENV/
+
+# ---- Caches ----
+.suffix_cache/          # tldextract's public-suffix-list cache
+*.log
+
+# ---- IDE / OS noise ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# NOTE: we intentionally DO commit models/, data/, and reports/ — they're
+# small and make the repo runnable out of the box. If your dataset/model ever
+# grows large, add them here to keep the repo lean.

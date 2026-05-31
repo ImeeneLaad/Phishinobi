@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishinobi - Phishing URL Detector</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <main class="wrap">
+    <header class="hero">
+      <div class="logo">🥷</div>
+      <h1>Phishinobi</h1>
+      <p class="tagline">Check if a link is safe before you click it.</p>
+    </header>
+
+    <section class="search-card">
+      <div class="search-row">
+        <input
+          id="url-input"
+          type="text"
+          placeholder="Paste a link here..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="analyze-btn">Analyze</button>
+      </div>
+
+      <label class="deep">
+        <input type="checkbox" id="deep-scan" checked />
+        <span>Also check domain age and DNS (a bit slower, more accurate)</span>
+      </label>
+
+      <div class="examples">
+        <span>Or try one:</span>
+        <button class="chip chip-safe"  data-url="https://www.wikipedia.org">🟢 Safe site</button>
+        <button class="chip chip-warn"  data-url="https://shop-deals-online.com/checkout?id=123">🟡 Suspicious</button>
+        <button class="chip chip-bad"   data-url="http://verify-your-email-here.com/confirm">🔴 Phishing</button>
+      </div>
+    </section>
+
+    <section id="result" class="result hidden">
+      <div id="verdict" class="verdict">
+        <span id="verdict-icon" class="verdict-icon">⏳</span>
+        <div>
+          <div id="verdict-label" class="verdict-label">Analyzing...</div>
+          <div id="verdict-url" class="verdict-url"></div>
+        </div>
+      </div>
+
+      <div class="meter-block">
+        <div class="meter-top">
+          <span>Risk score</span>
+          <span><strong id="risk-score">-</strong>/100 · <span id="risk-level">-</span></span>
+        </div>
+        <div class="meter-track"><div id="meter-fill" class="meter-fill"></div></div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <h3>Why this score</h3>
+          <ul id="reasons" class="reasons"></ul>
+        </div>
+        <div class="panel" id="intel-panel">
+          <h3>Domain info</h3>
+          <ul id="intel" class="intel"></ul>
+        </div>
+      </div>
+
+      <div id="inference" class="inference"></div>
+    </section>
+
+    <section class="promo">
+      <div class="promo-text">
+        <h2>Don't want to check links by hand?</h2>
+        <p>
+          There's also a browser extension. It checks pages automatically while you
+          browse and even tells you if a link is dodgy when you hover over it.
+        </p>
+        <a class="download-btn" href="/download/phishinobi-extension.zip">⬇ Download extension (.zip)</a>
+        <details>
+          <summary>How to install it</summary>
+          <ol>
+            <li>Download the zip above and unzip it</li>
+            <li>Go to <code>chrome://extensions</code></li>
+            <li>Turn on Developer mode (top right)</li>
+            <li>Click "Load unpacked" and pick the unzipped <code>chrome_extension</code> folder</li>
+            <li>Keep this server running so the extension can reach it</li>
+          </ol>
+        </details>
+      </div>
+    </section>
+
+    <footer class="foot">
+      Phishinobi · built with a Random Forest model + WHOIS/DNS lookups
+    </footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  popup.html
+  ----------
+  This is the little window that appears when you click the Phishinobi icon
+  in Chrome's toolbar. It's just structure — the logic lives in popup.js,
+  and the styling lives in popup.css.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>🥷 Phishinobi</h1>
+  </header>
+
+  <!-- The URL currently being checked -->
+  <div id="url-box" class="url-box">Loading…</div>
+
+  <!-- Options -->
+  <label class="deep-toggle">
+    <input type="checkbox" id="deep-scan" />
+    Deep scan (WHOIS + DNS — slower, more accurate)
+  </label>
+
+  <!-- The big verdict banner (filled in by popup.js) -->
+  <div id="verdict" class="verdict verdict--loading">
+    <span id="verdict-icon">⏳</span>
+    <span id="verdict-label">Analyzing…</span>
+  </div>
+
+  <!-- Risk score + level -->
+  <div id="risk" class="risk hidden">
+    Risk: <strong id="risk-score">–</strong>/100
+    (<span id="risk-level">–</span>)
+  </div>
+
+  <!-- Why? — the human-readable reasons -->
+  <div id="reasons-wrap" class="reasons-wrap hidden">
+    <div class="reasons-title">Why?</div>
+    <ul id="reasons"></ul>
+  </div>
+
+  <button id="recheck" class="recheck">🔄 Re-check</button>
+
+  <footer id="footer">Make sure the Phishinobi API is running on port 8000.</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

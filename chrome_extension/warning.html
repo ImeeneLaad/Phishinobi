@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+  warning.html
+  ------------
+  A full-page red warning that Phishinobi opens in a new tab when it detects a
+  phishing site. Unlike desktop notifications (which Windows can silence) or an
+  on-page banner (which Chrome blocks on error pages), opening our OWN extension
+  page in a tab is 100% under our control — it always shows.
+
+  Note: Manifest V3 forbids inline <script>, so the logic lives in warning.js.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>⚠️ Phishing Warning — Phishinobi</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(135deg, #7f1d1d, #450a0a);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: rgba(0,0,0,.35);
+      border: 2px solid #fca5a5;
+      border-radius: 16px;
+      max-width: 560px;
+      width: 100%;
+      padding: 32px;
+      text-align: center;
+    }
+    .big { font-size: 64px; line-height: 1; }
+    h1 { font-size: 28px; margin: 14px 0 6px; }
+    .sub { color: #fecaca; margin-bottom: 20px; }
+    .site {
+      background: rgba(0,0,0,.4);
+      padding: 10px;
+      border-radius: 8px;
+      word-break: break-all;
+      font-size: 13px;
+      color: #fde68a;
+      margin-bottom: 18px;
+    }
+    .score { font-size: 18px; margin-bottom: 18px; }
+    .score strong { font-size: 24px; }
+    .reasons { text-align: left; background: rgba(0,0,0,.3); border-radius: 8px; padding: 14px 14px 14px 30px; margin-bottom: 22px; }
+    .reasons li { margin: 4px 0; font-size: 14px; color: #fecaca; }
+    .buttons { display: flex; gap: 12px; justify-content: center; }
+    button {
+      border: none; border-radius: 8px; padding: 12px 20px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .safe { background: #16a34a; color: #fff; }
+    .safe:hover { background: #15803d; }
+    .ignore { background: transparent; color: #fca5a5; border: 1px solid #fca5a5; }
+    .ignore:hover { background: rgba(255,255,255,.08); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="big">🚨</div>
+    <h1>Phishing site blocked</h1>
+    <div class="sub">Phishinobi thinks this site is trying to steal your information.</div>
+
+    <div class="site" id="site">…</div>
+    <div class="score">Risk score: <strong id="score">–</strong> / 100</div>
+
+    <ul class="reasons" id="reasons"></ul>
+
+    <div class="buttons">
+      <button class="safe" id="back">← Get me out of here</button>
+      <button class="ignore" id="ignore">Ignore (I trust this site)</button>
+    </div>
+  </div>
+
+  <script src="warning.js"></script>
+</body>
+</html>

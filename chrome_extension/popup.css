@@ -1,0 +1,83 @@
+/* popup.css — styling for the Phishinobi popup window. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 340px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  padding: 14px;
+  background: #0f172a;       /* dark slate */
+  color: #e2e8f0;
+}
+
+header h1 { font-size: 18px; margin-bottom: 10px; }
+
+.url-box {
+  font-size: 12px;
+  background: #1e293b;
+  padding: 8px;
+  border-radius: 6px;
+  word-break: break-all;     /* long URLs wrap instead of overflowing */
+  margin-bottom: 10px;
+  color: #94a3b8;
+}
+
+.deep-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* The big verdict banner. Colour is set by adding a modifier class in JS. */
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.verdict--loading  { background: #334155; }
+.verdict--safe     { background: #064e3b; color: #6ee7b7; }   /* green */
+.verdict--phishing { background: #7f1d1d; color: #fca5a5; }   /* red */
+.verdict--error    { background: #78350f; color: #fcd34d; }   /* amber */
+
+.risk { font-size: 13px; margin-bottom: 10px; }
+
+.reasons-wrap { background: #1e293b; padding: 10px; border-radius: 6px; margin-bottom: 10px; }
+.reasons-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #cbd5e1; }
+#reasons { list-style: none; }
+#reasons li {
+  font-size: 12px;
+  padding: 4px 0 4px 16px;
+  position: relative;
+  color: #cbd5e1;
+}
+#reasons li::before { content: "•"; position: absolute; left: 4px; color: #f87171; }
+
+.recheck {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+.recheck:hover { background: #1d4ed8; }
+
+footer {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.hidden { display: none; }
