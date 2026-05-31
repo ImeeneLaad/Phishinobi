@@ -18,7 +18,7 @@ async function analyze() {
   }
 
   result.classList.remove("hidden");
-  setVerdict("loading", "⏳", "Analyzing...", url);
+  setVerdict("loading", "Analyzing...", url);
   setMeter(0, "var(--muted)");
   el("reasons").innerHTML = "";
   el("intel").innerHTML = "";
@@ -35,7 +35,7 @@ async function analyze() {
     if (!res.ok) throw new Error("HTTP " + res.status);
     render(await res.json());
   } catch (e) {
-    setVerdict("error", "⚠️", "Couldn't analyze", url);
+    setVerdict("error", "Couldn't analyze", url);
     el("inference").textContent = "Is the server running?";
   } finally {
     btn.disabled = false;
@@ -46,16 +46,16 @@ function render(data) {
   const score = data.risk_score;
 
   // safe / suspicious / phishing
-  let tier, icon, label, color;
+  let tier, label, color;
   if (data.is_phishing) {
-    tier = "bad";  icon = "🚨"; label = "Phishing";   color = "var(--bad)";
+    tier = "bad";  label = "Phishing";   color = "var(--bad)";
   } else if (score >= BORDERLINE) {
-    tier = "warn"; icon = "⚠️"; label = "Suspicious";  color = "var(--warn)";
+    tier = "warn"; label = "Suspicious";  color = "var(--warn)";
   } else {
-    tier = "safe"; icon = "✅"; label = "Looks safe";  color = "var(--safe)";
+    tier = "safe"; label = "Looks safe";  color = "var(--safe)";
   }
 
-  setVerdict(tier, icon, label, data.url);
+  setVerdict(tier, label, data.url);
   setMeter(score, color);
   el("risk-score").textContent = score;
   el("risk-level").textContent = data.risk_level;
@@ -98,7 +98,7 @@ function showIntel(enr) {
     ["Age", age == null ? "Unknown" : (age + " days (" + Math.floor(age / 365) + " yr)")],
     ["Created", enr.creation_date || "Unknown"],
     ["Registrar", enr.registrar || "Unknown"],
-    ["Resolves (DNS)", enr.resolves === true ? "Yes" : enr.resolves === false ? "No ⚠️" : "Unknown"],
+    ["Resolves (DNS)", enr.resolves === true ? "Yes" : enr.resolves === false ? "No" : "Unknown"],
   ];
   rows.forEach(([k, v]) => {
     const li = document.createElement("li");
@@ -107,10 +107,9 @@ function showIntel(enr) {
   });
 }
 
-function setVerdict(tier, icon, label, url) {
+function setVerdict(tier, label, url) {
   const v = el("verdict");
   v.className = "verdict " + tier;
-  el("verdict-icon").textContent = icon;
   el("verdict-label").textContent = label;
   el("verdict-url").textContent = url || "";
 }

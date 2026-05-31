@@ -3,100 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phishinobi - Phishing URL Detector</title>
+  <title>Phishinobi - Phishing Link Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <div class="bg-glow"></div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/">
+        <span class="brand-mark">P</span>
+        <span class="brand-name">Phishinobi</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#checker">Link Checker</a>
+        <a href="#extension">Browser Extension</a>
+      </nav>
+    </div>
+  </header>
 
-  <main class="wrap">
-    <header class="hero">
-      <div class="logo">🥷</div>
-      <h1>Phishinobi</h1>
-      <p class="tagline">Check if a link is safe before you click it.</p>
-    </header>
-
-    <section class="search-card">
-      <div class="search-row">
-        <input
-          id="url-input"
-          type="text"
-          placeholder="Paste a link here..."
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button id="analyze-btn">Analyze</button>
-      </div>
-
-      <label class="deep">
-        <input type="checkbox" id="deep-scan" checked />
-        <span>Also check domain age and DNS (a bit slower, more accurate)</span>
-      </label>
-
-      <div class="examples">
-        <span>Or try one:</span>
-        <button class="chip chip-safe"  data-url="https://www.wikipedia.org">🟢 Safe site</button>
-        <button class="chip chip-warn"  data-url="https://shop-deals-online.com/checkout?id=123">🟡 Suspicious</button>
-        <button class="chip chip-bad"   data-url="http://verify-your-email-here.com/confirm">🔴 Phishing</button>
-      </div>
-    </section>
-
-    <section id="result" class="result hidden">
-      <div id="verdict" class="verdict">
-        <span id="verdict-icon" class="verdict-icon">⏳</span>
-        <div>
-          <div id="verdict-label" class="verdict-label">Analyzing...</div>
-          <div id="verdict-url" class="verdict-url"></div>
-        </div>
-      </div>
-
-      <div class="meter-block">
-        <div class="meter-top">
-          <span>Risk score</span>
-          <span><strong id="risk-score">-</strong>/100 · <span id="risk-level">-</span></span>
-        </div>
-        <div class="meter-track"><div id="meter-fill" class="meter-fill"></div></div>
-      </div>
-
-      <div class="cols">
-        <div class="panel">
-          <h3>Why this score</h3>
-          <ul id="reasons" class="reasons"></ul>
-        </div>
-        <div class="panel" id="intel-panel">
-          <h3>Domain info</h3>
-          <ul id="intel" class="intel"></ul>
-        </div>
-      </div>
-
-      <div id="inference" class="inference"></div>
-    </section>
-
-    <section class="promo">
-      <div class="promo-text">
-        <h2>Don't want to check links by hand?</h2>
-        <p>
-          There's also a browser extension. It checks pages automatically while you
-          browse and even tells you if a link is dodgy when you hover over it.
+  <main>
+    <section class="hero" id="checker">
+      <div class="container">
+        <p class="eyebrow">Free Phishing Link Checker</p>
+        <h1>Check if a link is safe before you click it</h1>
+        <p class="hero-sub">
+          Paste any URL below and Phishinobi analyzes it in real time using a
+          machine-learning model and live domain intelligence to flag phishing,
+          scams, and suspicious sites.
         </p>
-        <a class="download-btn" href="/download/phishinobi-extension.zip">⬇ Download extension (.zip)</a>
-        <details>
-          <summary>How to install it</summary>
-          <ol>
-            <li>Download the zip above and unzip it</li>
-            <li>Go to <code>chrome://extensions</code></li>
-            <li>Turn on Developer mode (top right)</li>
-            <li>Click "Load unpacked" and pick the unzipped <code>chrome_extension</code> folder</li>
-            <li>Keep this server running so the extension can reach it</li>
-          </ol>
-        </details>
+
+        <div class="search-card">
+          <div class="search-row">
+            <input
+              id="url-input"
+              type="text"
+              placeholder="Enter a URL, e.g. https://example.com"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="analyze-btn">Check URL</button>
+          </div>
+
+          <label class="deep">
+            <input type="checkbox" id="deep-scan" checked />
+            <span>Run a deep scan (checks domain age and DNS &mdash; slightly slower, more accurate)</span>
+          </label>
+
+          <div class="examples">
+            <span class="examples-label">Try an example:</span>
+            <button class="chip chip-safe" data-url="https://www.wikipedia.org">Safe site</button>
+            <button class="chip chip-warn" data-url="https://shop-deals-online.com/checkout?id=123">Suspicious</button>
+            <button class="chip chip-bad"  data-url="http://verify-your-email-here.com/confirm">Phishing</button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <footer class="foot">
-      Phishinobi · built with a Random Forest model + WHOIS/DNS lookups
-    </footer>
+    <section class="results-wrap">
+      <div class="container">
+        <div id="result" class="result hidden">
+          <div id="verdict" class="verdict">
+            <span id="verdict-icon" class="verdict-icon"></span>
+            <div>
+              <div id="verdict-label" class="verdict-label">Analyzing...</div>
+              <div id="verdict-url" class="verdict-url"></div>
+            </div>
+          </div>
+
+          <div class="meter-block">
+            <div class="meter-top">
+              <span>Risk score</span>
+              <span><strong id="risk-score">-</strong>/100 &middot; <span id="risk-level">-</span></span>
+            </div>
+            <div class="meter-track"><div id="meter-fill" class="meter-fill"></div></div>
+          </div>
+
+          <div class="cols">
+            <div class="panel">
+              <h3>Why this score</h3>
+              <ul id="reasons" class="reasons"></ul>
+            </div>
+            <div class="panel" id="intel-panel">
+              <h3>Domain information</h3>
+              <ul id="intel" class="intel"></ul>
+            </div>
+          </div>
+
+          <div id="inference" class="inference"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">How Phishinobi checks a link</h2>
+        <div class="feature-grid">
+          <div class="feature">
+            <h3>URL analysis</h3>
+            <p>Inspects the link structure, host, length, and dozens of features known to signal phishing pages.</p>
+          </div>
+          <div class="feature">
+            <h3>Machine-learning model</h3>
+            <p>A trained Random Forest classifier scores the URL and estimates how likely it is to be malicious.</p>
+          </div>
+          <div class="feature">
+            <h3>Live domain intelligence</h3>
+            <p>Optional deep scan looks up domain age, registrar, and DNS records to catch freshly registered traps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="extension" id="extension">
+      <div class="container">
+        <div class="extension-card">
+          <div class="extension-text">
+            <h2>Stop checking links by hand</h2>
+            <p>
+              The Phishinobi browser extension scans pages automatically while you
+              browse, and warns you when a link looks dangerous the moment you hover over it.
+            </p>
+            <a class="download-btn" href="/download/phishinobi-extension.zip">Download extension (.zip)</a>
+            <details>
+              <summary>Installation instructions</summary>
+              <ol>
+                <li>Download the zip above and unzip it.</li>
+                <li>Go to <code>chrome://extensions</code>.</li>
+                <li>Turn on Developer mode (top right).</li>
+                <li>Click "Load unpacked" and select the unzipped <code>chrome_extension</code> folder.</li>
+                <li>Keep this server running so the extension can reach it.</li>
+              </ol>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Phishinobi &mdash; built with a Random Forest model and live WHOIS/DNS lookups.</p>
+    </div>
+  </footer>
 
   <script src="/static/app.js"></script>
 </body>
